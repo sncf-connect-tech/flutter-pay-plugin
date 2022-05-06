@@ -92,12 +92,16 @@ class RawApplePayButton extends StatelessWidget {
   /// transaction.
   final ApplePayButtonType type;
 
+  /// The cornerRadius of the Apple Pay button (default is 0.4)
+  final double cornerRadius;
+
   /// Creates an Apple Pay button widget with the parameters specified.
   RawApplePayButton({
     Key? key,
     this.onPressed,
     this.style = ApplePayButtonStyle.black,
     this.type = ApplePayButtonType.plain,
+    required this.cornerRadius,
   })  : constraints = BoxConstraints.tightFor(
           width: type.minimumAssetWidth,
           height: minimumButtonHeight,
@@ -122,6 +126,7 @@ class RawApplePayButton extends StatelessWidget {
           onPressed: onPressed,
           style: style,
           type: type,
+          cornerRadius: cornerRadius,
         );
       default:
         throw UnsupportedError(
@@ -140,12 +145,14 @@ class _UiKitApplePayButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final ApplePayButtonStyle style;
   final ApplePayButtonType type;
+  final double cornerRadius;
 
   _UiKitApplePayButton({
     Key? key,
     this.onPressed,
     this.style = ApplePayButtonStyle.black,
     this.type = ApplePayButtonType.plain,
+    required this.cornerRadius,
   }) : super(key: key);
 
   @override
@@ -153,7 +160,7 @@ class _UiKitApplePayButton extends StatelessWidget {
     return UiKitView(
       viewType: buttonId,
       creationParamsCodec: const StandardMessageCodec(),
-      creationParams: {'style': style.enumString, 'type': type.enumString},
+      creationParams: {'style': style.enumString, 'type': type.enumString, 'cornerRadius': cornerRadius},
       onPlatformViewCreated: (viewId) {
         methodChannel = MethodChannel('$buttonId/$viewId');
         methodChannel?.setMethodCallHandler((call) async {
