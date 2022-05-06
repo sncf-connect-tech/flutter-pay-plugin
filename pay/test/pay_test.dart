@@ -45,5 +45,11 @@ void main() {
     expect(client, isNotNull);
   });
 
+  test('A Pay client can load configuration from a string', () async {
+    final configStr = _fixtureAsset('google_pay_default_payment_profile.json');
+    final client = Pay.withStrings([configStr]);
+    expect(client, isNotNull);
+  });
+
   tearDown(() async {});
 }

@@ -25,13 +25,15 @@ class ApplePayButton extends PayButton {
 
   ApplePayButton({
     Key? key,
-    required String paymentConfigurationAsset,
+    String? paymentConfigurationAsset,
+    String? paymentConfigurationString,
     required void Function(Map<String, dynamic> result) onPaymentResult,
     required List<PaymentItem> paymentItems,
     ApplePayButtonStyle style = ApplePayButtonStyle.black,
     ApplePayButtonType type = ApplePayButtonType.plain,
     double width = RawApplePayButton.minimumButonWidth,
     double height = RawApplePayButton.minimumButtonHeight,
+    required double cornerRadius,
     EdgeInsets margin = EdgeInsets.zero,
     VoidCallback? onPressed,
     void Function(Object? error)? onError,
@@ -42,6 +44,7 @@ class ApplePayButton extends PayButton {
         super(
           key,
           paymentConfigurationAsset,
+          paymentConfigurationString,
           onPaymentResult,
           width,
           height,
@@ -53,6 +56,7 @@ class ApplePayButton extends PayButton {
     _applePayButton = RawApplePayButton(
         style: style,
         type: type,
+        cornerRadius: cornerRadius,
         onPressed: _defaultOnPressed(onPressed, paymentItems));
   }
 

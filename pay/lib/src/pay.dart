@@ -34,10 +34,18 @@ class Pay {
   Pay(this._configurations) : _payPlatform = PayMethodChannel();
 
   /// Alternative constructor to create a [Pay] object with a list of
-  /// configurations in [String] format.
+  /// configuration assets in [String] format.
   Pay.withAssets(List<String> configAssets)
       : _payPlatform = PayMethodChannel() {
     _assetInitializationFuture = _loadConfigAssets(configAssets);
+  }
+
+  /// Alternative constructor to create a [Pay] object with a list of
+  /// configurations in [String] format.
+  Pay.withStrings(List<String> configStrings)
+      : _payPlatform = PayMethodChannel() {
+    _assetInitializationFuture = Future.value(
+        configStrings.map((cs) => PaymentConfiguration.fromJsonString(cs)));
   }
 
   /// Load the list of configurations from the assets.
