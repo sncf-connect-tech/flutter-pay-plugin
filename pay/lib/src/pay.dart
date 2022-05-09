@@ -44,14 +44,17 @@ class Pay {
   /// configurations in [String] format.
   Pay.withStrings(List<String> configStrings)
       : _payPlatform = PayMethodChannel() {
-    _assetInitializationFuture = Future.value(
-        configStrings.map((cs) => PaymentConfiguration.fromJsonString(cs)));
+    _assetInitializationFuture = _loadConfigStrings(configStrings);
   }
 
   /// Load the list of configurations from the assets.
   Future _loadConfigAssets(List<String> configurationAssets) async =>
       _configurations = await Future.wait(
           configurationAssets.map((ca) => PaymentConfiguration.fromAsset(ca)));
+
+  /// Load the list of configurations from the strings.
+  Future _loadConfigStrings(List<String> configurationStrings) async =>
+      _configurations = configurationStrings.map((cs) => PaymentConfiguration.fromJsonString(cs)).toList();
 
   /// Helper method to load the payment configuration for a given [provider].
   PaymentConfiguration _findConfig([PayProvider? provider]) => provider == null
