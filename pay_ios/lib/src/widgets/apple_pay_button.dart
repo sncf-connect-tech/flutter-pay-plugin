@@ -161,6 +161,9 @@ class _UiKitApplePayButton extends StatelessWidget {
       viewType: buttonId,
       creationParamsCodec: const StandardMessageCodec(),
       creationParams: {'style': style.enumString, 'type': type.enumString, 'cornerRadius': cornerRadius},
+      gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+        Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+      ].toSet(),
       onPlatformViewCreated: (viewId) {
         methodChannel = MethodChannel('$buttonId/$viewId');
         methodChannel?.setMethodCallHandler((call) async {
